@@ -181,7 +181,7 @@ export class AuthController {
         body.multiUse,
       );
       console.log(otp);
-      return { message: 'OTP sent successfully' };
+      return { message: 'OTP sent successfully', otp };
     } catch (error) {
       if (error instanceof UnauthorizedError)
         throw new UnauthorizedException(error.message);
