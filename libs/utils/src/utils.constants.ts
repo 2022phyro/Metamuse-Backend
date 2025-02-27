@@ -28,3 +28,9 @@ export const PORT = parseInt(process.env.NEST_PORT as string);
 
 // Conversation
 export const CONVERSATION_MAX_MEMBERS = 200;
+
+
+// SUI
+export const SUI_RPC_URL = process.env.SUI_RPC_URL as string;
+export const SUI_PRIVATE_KEY = process.env.SUI_PRIVATE_KEY as string;
+export const SUI_CONTRACT_ADDRESS = process.env.SUI_CONTRACT_ADDRESS as string;

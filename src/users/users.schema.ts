@@ -21,6 +21,9 @@ export class User {
 
     @Prop({ default: "unverified"}) // unverified, active, banned, deactivated
     status: string;
+
+    // @Prop({ type: [String], default: ["user"]}) // general, admin, artist
+    // roles: string[];
 }
 export const UserSchema =
     SchemaFactory.createForClass(User);

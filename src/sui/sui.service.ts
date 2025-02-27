@@ -8,6 +8,7 @@ import { SuiClient, SuiHTTPTransport } from '@mysten/sui/client';
 import { Ed25519Keypair } from '@mysten/sui/keypairs/ed25519';
 import { Transaction } from '@mysten/sui/transactions';
 import { fromBase64 } from '@mysten/sui/utils';
+import { SUI_CONTRACT_ADDRESS, SUI_PRIVATE_KEY, SUI_RPC_URL } from '@app/utils';
 
 @Injectable()
 export class SuiService {
@@ -16,14 +17,14 @@ export class SuiService {
   private contractAddress: string;
 
   constructor() {
-    const rpcUrl = process.env.SUI_RPC_URL;
+    const rpcUrl = SUI_RPC_URL;
     this.client = new SuiClient({
       transport: new SuiHTTPTransport({
-        url: rpcUrl || 'https://fullnode.mainnet.sui.io:443',
+        url: rpcUrl,
       }),
     });
 
-    const privatekeyBase64 = process.env.SUI_PRIVATE_KEY;
+    const privatekeyBase64 = SUI_PRIVATE_KEY;
     if (!privatekeyBase64) {
       console.warn(
         'Warning: SUI_PRIVATE_KEY is not defined in environment variables',
@@ -34,7 +35,7 @@ export class SuiService {
       this.keypair = Ed25519Keypair.fromSecretKey(privatekeyBytes);
     }
 
-    this.contractAddress = process.env.SUI_CONTRACT_ADDRESS || '0x0';
+    this.contractAddress = SUI_CONTRACT_ADDRESS;
   }
 
   /**
