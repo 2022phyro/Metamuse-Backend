@@ -9,6 +9,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { ConversationModule } from './conversation/conversation.module';
 import { ChatGateway } from './chat/chat.gateway';
 import { ChatModule } from './chat/chat.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ChatModule } from './chat/chat.module';
     }]),
     ConversationModule,
     ChatModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [AppService, ChatGateway],
