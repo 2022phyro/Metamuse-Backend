@@ -21,7 +21,7 @@ export class EmailService {
         pass: EMAIL_PASSWORD,
       },
       require_authentication: true
-    });
+    } as any);
     const viewPath = join(__dirname, '../email-templates');
     const partialsDir = join(__dirname, '../email-templates/partials');
     const layoutsDir = join(__dirname, '../email-templates/layouts');
@@ -69,7 +69,7 @@ export class EmailService {
     try {
       const { to, subject, template, context, html, text, from, attachments } = options;
       // Set up email data
-      const mailOptions: nodemailer.SendMailOptions = {
+      const mailOptions: any = { // nodemailer.SendMailOptions = {
         from: from || EMAIL_FROM,
         to,
         subject,
