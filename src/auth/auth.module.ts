@@ -19,6 +19,7 @@ import {
 } from '@app/utils';
 import { AuthGuard } from './auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { NotificationModule } from 'src/notification/notification.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { APP_GUARD } from '@nestjs/core';
       { name: OTP.name, schema: OTPSchema },
     ]),
     UsersModule,
+    NotificationModule,
     JwtModule.register({
       global: true,
       secret: JWT_SIGNING_KEY,

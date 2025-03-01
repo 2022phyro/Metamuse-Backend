@@ -4,6 +4,7 @@ import { Model, Types } from 'mongoose';
 import { BlacklistAccess, BlacklistRefresh, OTP } from './auth.schema';
 import {
   ForbiddenError,
+  FRONTEND_URL,
   IntegrityError,
   JWT_SIGNED_TOKEN_EXPIRY,
   NotFoundError,
@@ -22,6 +23,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { encryptPassword, verifyPassword } from '@app/utils/utils.encrypt';
 import { omit } from 'lodash';
+import { EmailService } from 'src/notification/notification.service';
 interface AuthTokenResponse {
   accessToken: string;
   userId: string;
@@ -88,7 +90,7 @@ export class AuthService {
   createLinkToken(data: any): string {
     return this.jwtService.sign(data, {
       secret: JWT_SIGNING_KEY,
-      expiresIn:  JWT_SIGNED_TOKEN_EXPIRY,
+      expiresIn: JWT_SIGNED_TOKEN_EXPIRY,
       algorithm: JWT_ALGORITHM,
     });
   }
@@ -177,7 +179,10 @@ export class AuthService {
 
 @Injectable()
 export class OTPService {
-  constructor(@InjectModel(OTP.name) private otpModel: Model<OTP>) {}
+  constructor(
+    @InjectModel(OTP.name) private otpModel: Model<OTP>,
+    private emailService: EmailService,
+  ) {}
   private generateOTP(): string {
     return Math.floor(100000 + Math.random() * 900000).toString();
   }
@@ -257,5 +262,19 @@ export class OTPService {
       return otpRecord;
     }
     throw new UnauthorizedError('OTP verification failed');
+  }
+
+  async sendOTP(otp, user) {
+    await this.emailService.sendMail({
+      to: user.email,
+      subject: 'Your OTP Verification Code',
+      template: 'otp-email',
+      context: {
+        otp: otp.otp,
+        verificationLink: `${FRONTEND_URL}/verify/${otp._id.toHexString()}?type=${otp.otpType}`,
+        userName: user.firstName, // Simple way to get a username from email
+        currentYear: new Date().getFullYear(),
+      },
+    });
   }
 }

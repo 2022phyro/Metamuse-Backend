@@ -34,3 +34,16 @@ export const CONVERSATION_MAX_MEMBERS = 200;
 export const SUI_RPC_URL = process.env.SUI_RPC_URL as string;
 export const SUI_PRIVATE_KEY = process.env.SUI_PRIVATE_KEY as string;
 export const SUI_CONTRACT_ADDRESS = process.env.SUI_CONTRACT_ADDRESS as string;
+
+// Zoho
+
+export const EMAIL_HOST = process.env.EMAIL_HOST as string;
+export const EMAIL_PORT = parseInt(process.env.EMAIL_PORT as string);
+export const EMAIL_SECURE = process.env.EMAIL_SECURE === 'true';
+export const EMAIL_USER = process.env.EMAIL_USER as string;
+export const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD as string;
+export const EMAIL_FROM = process.env.EMAIL_FROM as string;
+export const EMAIL_FROM_NAME = process.env.EMAIL_FROM_NAME as string;
+
+// Frontend
+export const FRONTEND_URL = process.env.FRONTEND_URL as string;
